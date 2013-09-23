@@ -9,6 +9,10 @@ class NaiveBayesClassifer:
 		#Declare variables to keep count of the geeks and those heathen non-geeks
 		geekCount = 0
 		nongeekCount = 0
+		
+		#Create geek and non-geek dictionaries
+		geekInstance = self.Instance()
+		nongeekInstance = self.Instance()
 
 		#remove whitespace from files
 		for line in fileLines:
@@ -23,9 +27,7 @@ class NaiveBayesClassifer:
 					tempInstance = self.Instance()
 					valueList = self.parseLine(line)
 					
-					#Create geek and non-geek dictionaries
-					geekInstance = self.Instance()
-					nongeekInstance = self.Instance()
+					
 					
 					
 					#print valueList #This prints all the values for those variables
@@ -56,151 +58,157 @@ class NaiveBayesClassifer:
 					for attr, value in zip(listofVariables, valueList):
 						if (value == "geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
-								geekInstance.values.setdefault(attr2, {})['someValue'] = value2
-								print geekInstance.values
+								if (attr2 == "@gpa"):
+									if (float(value2) > 3.6):
+										geekInstance.values.setdefault(attr2, {})['gpa_3_6_orMore'] = value2
+									else:
+										geekInstance.values.setdefault(attr2, {})['gpa_3_6_orLess'] = value2
 						elif (value == "non-geek"):
-							nongeekInstance.values.setdefault(attr, {})['someValue'] = value
+							nongeekInstance.values.setdefault(attr, {})['gpa_3_6_orLess'] = value
 					
-					if (attr == "@gender"):
-						
-					elif (attr == "@education"):
-						
-					elif (attr == "@relationship_status"):
-						
-					elif (attr == "@gpa"):
-						
-					elif (attr == "@major"):
-						
-					elif (attr == "@age"):
-						
-					elif (attr == "@employment"):
-						
-					elif (attr == "@ACT"):
-						
-					elif (attr == "@eyesight"):
-						
-					elif (attr == "@subject"):
-						
-					elif (attr == "@sports_cards"):
-						
-					elif (attr == "@magic"):
-						
-					elif (attr == "@comic_books"):
-						
-					elif (attr == "@action_figures"):
-						
-					elif (attr == "@transformers"):
-						
-					elif (attr == "@board_games"):
-						
-					elif (attr == "@video_games"):
-						
-					elif (attr == "@computer_games"):
-						
-					elif (attr == "@d&d"):
-						
-					elif (attr == "@sports"):
-						
-					elif (attr == "@bacon"):
-						
-					elif (attr == "@zombies"):
-						
-					elif (attr == "@pokemon"):
-						
-					elif (attr == "@anime"):
-						
-					elif (attr == "@game_system"):
-						
-					elif (attr == "@legos"):
-						
-					elif (attr == "@remote"):
-						
-					elif (attr == "@camping"):
-						
-					elif (attr == "@desktop_OS"):
-						
-					elif (attr == "@mobile_OS"):
-						
-					elif (attr == "@browser"):
-						
-					elif (attr == "@stackoverflow"):
-						
-					elif (attr == "@lifehacker"):
-						
-					elif (attr == "@slashdot"):
-						
-					elif (attr == "@hacker_news"):
-						
-					elif (attr == "@quora"):
-						
-					elif (attr == "@xkcd"):
-						
-					elif (attr == "@ccpp"):
-						
-					elif (attr == "@java"):
-						
-					elif (attr == "@obj_c"):
-						
-					elif (attr == "@php"):
-						
-					elif (attr == "@c_sharp"):
-						
-					elif (attr == "@python"):
-						
-					elif (attr == "@perl"):
-						
-					elif (attr == "@javascript"):
-						
-					elif (attr == "@lisp"):
-						
-					elif (attr == "@vb_net"):
-						
-					elif (attr == "@bash"):
-						
-					elif (attr == "@ruby"):
-						
-					elif (attr == "@star_wars_4_6"):
-						
-					elif (attr == "@star_wars_1_3"):
-						
-					elif (attr == "@lotr"):
-						
-					elif (attr == "@matrix"):
-						
-					elif (attr == "@tron1982"):
-						
-					elif (attr == "@tron2010"):
-						
-					elif (attr == "@spaceballs"):
-						
-					elif (attr == "@blade_runner"):
-						
-					elif (attr == "@xfiles"):
-						
-					elif (attr == "@fringe"):
-						
-					elif (attr == "@it_crowd"):
-						
-					elif (attr == "@mythbusters"):
-						
-					elif (attr == "@numb3rs"):
-						
-					elif (attr == "@dr_who_2005"):
-						
-					elif (attr == "@dr_who_1963"):
-						
-					elif (attr == "@battlestar_galactica_2004"):
-						
-					elif (attr == "@battlestar_galactica_1978"):
-						
-					elif (attr == "@star_trek"):
-						
-					elif (attr == "@wars_trek"):
-						
-					elif (attr == "@lotr_ee"):
-						
-					elif (attr == "@lotr_novels"):
-						
+					
+					'''		
+					for attr, value in zip(listofVariables, valueList):
+						if (attr == "@gender"):
+							geekInstance.values.setdefault
+						elif (attr == "@education"):
+								
+						elif (attr == "@relationship_status"):
+							
+						elif (attr == "@gpa"):
+							
+						elif (attr == "@major"):
+							
+						elif (attr == "@age"):
+							
+						elif (attr == "@employment"):
+							
+						elif (attr == "@ACT"):
+							
+						elif (attr == "@eyesight"):
+							
+						elif (attr == "@subject"):
+							
+						elif (attr == "@sports_cards"):
+							
+						elif (attr == "@magic"):
+							
+						elif (attr == "@comic_books"):
+							
+						elif (attr == "@action_figures"):
+							
+						elif (attr == "@transformers"):
+							
+						elif (attr == "@board_games"):
+							
+						elif (attr == "@video_games"):
+							
+						elif (attr == "@computer_games"):
+							
+						elif (attr == "@d&d"):
+							
+						elif (attr == "@sports"):
+							
+						elif (attr == "@bacon"):
+							
+						elif (attr == "@zombies"):
+							
+						elif (attr == "@pokemon"):
+							
+						elif (attr == "@anime"):
+							
+						elif (attr == "@game_system"):
+							
+						elif (attr == "@legos"):
+							
+						elif (attr == "@remote"):
+							
+						elif (attr == "@camping"):
+							
+						elif (attr == "@desktop_OS"):
+							
+						elif (attr == "@mobile_OS"):
+							
+						elif (attr == "@browser"):
+							
+						elif (attr == "@stackoverflow"):
+							
+						elif (attr == "@lifehacker"):
+							
+						elif (attr == "@slashdot"):
+							
+						elif (attr == "@hacker_news"):
+							
+						elif (attr == "@quora"):
+							
+						elif (attr == "@xkcd"):
+							
+						elif (attr == "@ccpp"):
+							
+						elif (attr == "@java"):
+							
+						elif (attr == "@obj_c"):
+							
+						elif (attr == "@php"):
+							
+						elif (attr == "@c_sharp"):
+							
+						elif (attr == "@python"):
+							
+						elif (attr == "@perl"):
+							
+						elif (attr == "@javascript"):
+							
+						elif (attr == "@lisp"):
+							
+						elif (attr == "@vb_net"):
+							
+						elif (attr == "@bash"):
+							
+						elif (attr == "@ruby"):
+							
+						elif (attr == "@star_wars_4_6"):
+							
+						elif (attr == "@star_wars_1_3"):
+							
+						elif (attr == "@lotr"):
+							
+						elif (attr == "@matrix"):
+							
+						elif (attr == "@tron1982"):
+							
+						elif (attr == "@tron2010"):
+							
+						elif (attr == "@spaceballs"):
+							
+						elif (attr == "@blade_runner"):
+							
+						elif (attr == "@xfiles"):
+							
+						elif (attr == "@fringe"):
+							
+						elif (attr == "@it_crowd"):
+							
+						elif (attr == "@mythbusters"):
+							
+						elif (attr == "@numb3rs"):
+							
+						elif (attr == "@dr_who_2005"):
+							
+						elif (attr == "@dr_who_1963"):
+							
+						elif (attr == "@battlestar_galactica_2004"):
+							
+						elif (attr == "@battlestar_galactica_1978"):
+							
+						elif (attr == "@star_trek"):
+							
+						elif (attr == "@wars_trek"):
+							
+						elif (attr == "@lotr_ee"):
+							
+						elif (attr == "@lotr_novels"): '''
+							
 
 					# listOfInstances.append(Instance())
 				
@@ -210,6 +218,7 @@ class NaiveBayesClassifer:
 					# 	listOfInstances[-1].values[attr] = value
 		
 		
+		print geekInstance.values
 		return listOfInstances
 		
 	def parseLine(self, line): #parses variables on an @ line
