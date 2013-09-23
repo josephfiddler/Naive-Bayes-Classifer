@@ -5,10 +5,14 @@ class NaiveBayesClassifer:
 		listOfInstances = []
 		file = open (dataFile, 'rU')
 		fileLines = file.readlines()
+		
+		#Declare variables to keep count of the geeks and those heathen non-geeks
+		geekCount = 0
+		nongeekCount = 0
 
 		#remove whitespace from files
 		for line in fileLines:
-			line= line.rstrip()
+			line = line.rstrip()
 			if line:
 				if line[0] == '#':   #check for comment
 					x = 2
@@ -18,22 +22,39 @@ class NaiveBayesClassifer:
 				else:				# handle data
 					tempInstance = self.Instance()
 					valueList = self.parseLine(line)
+					
+					#Create geek and non-geek dictionaries
+					geekInstance = self.Instance()
+					nongeekInstance = self.Instance()
+					
+					
 					#print valueList #This prints all the values for those variables
 					if len(listofVariables) < 1:
 						print "Bad Data File"
 						break
 						
+					for value in valueList:
+						if (value == "geek"):
+							geekCount = geekCount + 1
+						elif (value == "non-geek"):
+							nongeekCount = nongeekCount + 1
+						
+					
+					geekInstance.values['prob'] = str(geekCount) + "/" + str(geekCount + nongeekCount)
+					nongeekInstance.values['prob'] = str(nongeekCount) + "/" + str(geekCount + nongeekCount)
+					
 						
 					#From what I can tell, this where the values are being put into the dictionaries.
 					#This function and the Instace class is where we may need a dictionary of dictionaries
 					#like on the Google doc. At least I narrowed down where the problem is. I believe once 					#we get the dictionary thing down, the rest of this program will be easy.
 					for attr, value in zip(listofVariables, valueList):
 						tempInstance.values[attr] = (value).lower()
-						#print tempInstance.values[attr] #Prints the attribute values
+						#print tempInstance.values
 					listOfInstances.append(tempInstance)
 					
-					#this is the actual dictionary. This is what we need to modify
-					print tempInstance.values['@gpa']
+					print geekInstance.values['prob']
+					print nongeekInstance.values['prob']
+					
 
 					# listOfInstances.append(Instance())
 				
@@ -59,7 +80,6 @@ class NaiveBayesClassifer:
 			return str(self.values) + " ("+ self.Classification + ")"
 		
 if __name__ == '__main__':
-	print "Hello world"
 	nbc = NaiveBayesClassifer()
 	nbc.parseDataFile("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
 	
