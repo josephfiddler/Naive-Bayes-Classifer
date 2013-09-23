@@ -61,6 +61,146 @@ class NaiveBayesClassifer:
 						elif (value == "non-geek"):
 							nongeekInstance.values.setdefault(attr, {})['someValue'] = value
 					
+					if (attr == "@gender"):
+						
+					elif (attr == "@education"):
+						
+					elif (attr == "@relationship_status"):
+						
+					elif (attr == "@gpa"):
+						
+					elif (attr == "@major"):
+						
+					elif (attr == "@age"):
+						
+					elif (attr == "@employment"):
+						
+					elif (attr == "@ACT"):
+						
+					elif (attr == "@eyesight"):
+						
+					elif (attr == "@subject"):
+						
+					elif (attr == "@sports_cards"):
+						
+					elif (attr == "@magic"):
+						
+					elif (attr == "@comic_books"):
+						
+					elif (attr == "@action_figures"):
+						
+					elif (attr == "@transformers"):
+						
+					elif (attr == "@board_games"):
+						
+					elif (attr == "@video_games"):
+						
+					elif (attr == "@computer_games"):
+						
+					elif (attr == "@d&d"):
+						
+					elif (attr == "@sports"):
+						
+					elif (attr == "@bacon"):
+						
+					elif (attr == "@zombies"):
+						
+					elif (attr == "@pokemon"):
+						
+					elif (attr == "@anime"):
+						
+					elif (attr == "@game_system"):
+						
+					elif (attr == "@legos"):
+						
+					elif (attr == "@remote"):
+						
+					elif (attr == "@camping"):
+						
+					elif (attr == "@desktop_OS"):
+						
+					elif (attr == "@mobile_OS"):
+						
+					elif (attr == "@browser"):
+						
+					elif (attr == "@stackoverflow"):
+						
+					elif (attr == "@lifehacker"):
+						
+					elif (attr == "@slashdot"):
+						
+					elif (attr == "@hacker_news"):
+						
+					elif (attr == "@quora"):
+						
+					elif (attr == "@xkcd"):
+						
+					elif (attr == "@ccpp"):
+						
+					elif (attr == "@java"):
+						
+					elif (attr == "@obj_c"):
+						
+					elif (attr == "@php"):
+						
+					elif (attr == "@c_sharp"):
+						
+					elif (attr == "@python"):
+						
+					elif (attr == "@perl"):
+						
+					elif (attr == "@javascript"):
+						
+					elif (attr == "@lisp"):
+						
+					elif (attr == "@vb_net"):
+						
+					elif (attr == "@bash"):
+						
+					elif (attr == "@ruby"):
+						
+					elif (attr == "@star_wars_4_6"):
+						
+					elif (attr == "@star_wars_1_3"):
+						
+					elif (attr == "@lotr"):
+						
+					elif (attr == "@matrix"):
+						
+					elif (attr == "@tron1982"):
+						
+					elif (attr == "@tron2010"):
+						
+					elif (attr == "@spaceballs"):
+						
+					elif (attr == "@blade_runner"):
+						
+					elif (attr == "@xfiles"):
+						
+					elif (attr == "@fringe"):
+						
+					elif (attr == "@it_crowd"):
+						
+					elif (attr == "@mythbusters"):
+						
+					elif (attr == "@numb3rs"):
+						
+					elif (attr == "@dr_who_2005"):
+						
+					elif (attr == "@dr_who_1963"):
+						
+					elif (attr == "@battlestar_galactica_2004"):
+						
+					elif (attr == "@battlestar_galactica_1978"):
+						
+					elif (attr == "@star_trek"):
+						
+					elif (attr == "@wars_trek"):
+						
+					elif (attr == "@lotr_ee"):
+						
+					elif (attr == "@lotr_novels"):
+						
 
 					# listOfInstances.append(Instance())
 				
