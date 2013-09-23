@@ -52,8 +52,14 @@ class NaiveBayesClassifer:
 						#print tempInstance.values
 					listOfInstances.append(tempInstance)
 					
-					print geekInstance.values['prob']
-					print nongeekInstance.values['prob']
+					#Defnitely will have to use a Switch statement. Can't think of any other way, it will be huge
+					for attr, value in zip(listofVariables, valueList):
+						if (value == "geek"):
+							for attr2, value2 in zip(listofVariables, valueList):
+								geekInstance.values.setdefault(attr2, {})['someValue'] = value2
+								print geekInstance.values
+						elif (value == "non-geek"):
+							nongeekInstance.values.setdefault(attr, {})['someValue'] = value
 					
 
 					# listOfInstances.append(Instance())
@@ -62,6 +68,7 @@ class NaiveBayesClassifer:
 					# for attr,value in zip(listofVariables, valueList):
 					# 	print attr + ":" + value
 					# 	listOfInstances[-1].values[attr] = value
+		
 		
 		return listOfInstances
 		
