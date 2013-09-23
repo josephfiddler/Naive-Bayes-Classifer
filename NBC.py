@@ -14,11 +14,11 @@ class NaiveBayesClassifer:
 					x = 2
 				elif line[0] == '@':	 #check for attribute
 					listofVariables = self.parseLine(line)
-					print listofVariables #This prints all the @ variables that were in the data file
+					#print listofVariables #This prints all the @ variables that were in the data file
 				else:				# handle data
 					tempInstance = self.Instance()
 					valueList = self.parseLine(line)
-					print valueList #This prints all the values for those variables
+					#print valueList #This prints all the values for those variables
 					if len(listofVariables) < 1:
 						print "Bad Data File"
 						break
@@ -29,10 +29,11 @@ class NaiveBayesClassifer:
 					#like on the Google doc. At least I narrowed down where the problem is. I believe once 					#we get the dictionary thing down, the rest of this program will be easy.
 					for attr, value in zip(listofVariables, valueList):
 						tempInstance.values[attr] = (value).lower()
-						print tempInstance.values[attr] #Prints the attribute values
+						#print tempInstance.values[attr] #Prints the attribute values
 					listOfInstances.append(tempInstance)
 					
-					print listOfInstances
+					#this is the actual dictionary. This is what we need to modify
+					print tempInstance.values['@gpa']
 
 					# listOfInstances.append(Instance())
 				
