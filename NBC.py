@@ -31,6 +31,8 @@ class NaiveBayesClassifer:
 						tempInstance.values[attr] = (value).lower()
 						print tempInstance.values[attr] #Prints the attribute values
 					listOfInstances.append(tempInstance)
+					
+					print listOfInstances
 
 					# listOfInstances.append(Instance())
 				
