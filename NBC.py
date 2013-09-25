@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 class NaiveBayesClassifer:
 				
 	def parseDataFile(self, dataFile):
@@ -14,6 +16,8 @@ class NaiveBayesClassifer:
 		#Create geek and non-geek dictionaries
 		geekInstance = self.Instance()
 		nongeekInstance = self.Instance()
+		geekDict = defaultdict(int)
+		nongeekDict = defaultdict(int)
 
 		#remove whitespace from files
 		for line in fileLines:
@@ -46,9 +50,8 @@ class NaiveBayesClassifer:
 					geekInstance.values['prob'] = str(geekCount) + "/" + str(geekCount + nongeekCount)
 					nongeekInstance.values['prob'] = str(nongeekCount) + "/" + str(geekCount + nongeekCount)
 					
-					geekInstance = self.initializeDictionary(geekInstance, listofVariables)
 					
-					print geekInstance	
+					
 					#From what I can tell, this where the values are being put into the dictionaries.
 					#This function and the Instace class is where we may need a dictionary of dictionaries
 					#like on the Google doc. At least I narrowed down where the problem is. I believe once 					#we get the dictionary thing down, the rest of this program will be easy.
@@ -66,11 +69,24 @@ class NaiveBayesClassifer:
 							for attr2, value2 in zip(listofVariables, valueList):
 								if (attr2 == "@gpa"):
 									if (float(value2) > 3.6):
-										geekInstance.values.setdefault(attr2, {})['gpa_3_6_orMore'] += geekInstance.values.setdefault(attr2, {})['gpa_3_6_orMore']
+										geekDict[value2] += 1
+										#geekInstance.values.setdefault(attr2, {})['gpa_3_6_orMore'] = 1
 									else:
-										geekInstance.values.setdefault(attr2, {})['gpa_3_6_orLess'] += geekInstance.values.setdefault(attr2, {})['gpa_3_6_orLess']
+									    geekDict[value2] += 1
+								
 						elif (value == "non-geek"):
-							nongeekInstance.values.setdefault(attr, {})['gpa_3_6_orLess'] = value
+							for attr2, value2 in zip(listofVariables, valueList):
+								if (attr2 == "@gpa"):
+									if (float(value2) < 3.6):
+										nongeekDict[value2] += 1
+									else:
+										nongeekDict[value2] += 1
+								elif (attr2 == "@gender"):
+									if (value2 == "Male"):
+										nongeekDict[value2] += 1
+									else:
+										nongeekDict[value2] += 1
+							
 					
 					
 					'''		
@@ -224,8 +240,11 @@ class NaiveBayesClassifer:
 					# 	listOfInstances[-1].values[attr] = value
 		
 		
-		print geekInstance.values
+		print geekDict.items()
+		nongeekInstance.values.update(nongeekDict)
+		
 		print nongeekInstance.values
+		#print nongeekInstance.values
 		return listOfInstances
 		
 	def parseLine(self, line): #parses variables on an @ line
