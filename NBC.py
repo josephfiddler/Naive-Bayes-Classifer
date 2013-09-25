@@ -76,16 +76,20 @@ class NaiveBayesClassifer:
 								
 						elif (value == "non-geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
+								nongeekDict.clear()
 								if (attr2 == "@gpa"):
 									if (float(value2) < 3.6):
 										nongeekDict[value2] += 1
 									else:
 										nongeekDict[value2] += 1
+									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
 								elif (attr2 == "@gender"):
 									if (value2 == "Male"):
 										nongeekDict[value2] += 1
 									else:
 										nongeekDict[value2] += 1
+										
+									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
 							
 					
 					
@@ -241,7 +245,7 @@ class NaiveBayesClassifer:
 		
 		
 		print geekDict.items()
-		nongeekInstance.values.update(nongeekDict)
+		#nongeekInstance.values.update(nongeekDict)
 		
 		print nongeekInstance.values
 		#print nongeekInstance.values
