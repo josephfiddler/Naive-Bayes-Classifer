@@ -18,6 +18,7 @@ class NaiveBayesClassifer:
 		nongeekInstance = self.Instance()
 		geekDict = defaultdict(int)
 		nongeekDict = defaultdict(int)
+		nonGeekProbs = defaultdict(dict)
 
 		#remove whitespace from files
 		for line in fileLines:
@@ -77,7 +78,18 @@ class NaiveBayesClassifer:
 						elif (value == "non-geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
 								nongeekDict[value2] += 1
-								#nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
+								#nonGeekProbs[attr2].update(nongeekDict)
+								if not nongeekInstance.values.has_key(attr2):
+									nongeekInstance.values[attr2] = {}
+								if not nongeekInstance.values[attr2].has_key(value2):
+									nongeekInstance.values[attr2][value2] = 1
+								else:
+									nongeekInstance.values[attr2][value2] += 1
+								#nongeekInstance.values[attr2][value2] = nongeekDict[value2]
+									#if not nongeekInstance.values[attr2].has_key(value2):
+										#nongeekInstance.values[attr2][value2] = {}
+								#nongeekInstance.values[attr2][value2] = nongeekDict[value2]
+								#nongeekInstance.values[attr2][value2] = nongeekDict[value2]
 								
 								'''if (attr2 == "@gpa"):
 									nongeekDict[value2] += 1
@@ -293,8 +305,10 @@ class NaiveBayesClassifer:
 									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)'''
 									
 								
-								#nongeekDict.clear()
+						nongeekDict.clear()
 						#nongeekInstance.values.setdefault('@gpa', {}).update(nongeekDict.fromkeys(nongeekDict.keys()))
+						
+							
 					
 
 					# listOfInstances.append(Instance())
@@ -306,9 +320,9 @@ class NaiveBayesClassifer:
 		
 		
 		#print geekDict.items()
-		nongeekInstance.values.update(nongeekDict)
+		#nongeekInstance.values.update(nongeekDict)
 		#print nongeekDict.items()
-		print nongeekInstance.values['Female'] nongeekCount
+		print nongeekInstance.values
 		
 		return listOfInstances
 		
