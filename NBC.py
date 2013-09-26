@@ -76,22 +76,23 @@ class NaiveBayesClassifer:
 								
 						elif (value == "non-geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
+								nongeekDict[value2] += 1
+								#nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
 								
-								if (attr2 == "@gpa"):
+								'''if (attr2 == "@gpa"):
 									nongeekDict[value2] += 1
 									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
-									continue
-								elif (attr2 == "@gender"):
+									break'''
+								'''if (attr2 == "@gender"):
 									nongeekDict[value2] += 1
 									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
-									continue
 								elif (attr2 == "@education"):
 									nongeekDict[value2] += 1
 									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
-									continue
+									break
 								elif (attr2 == "@relationship_status"):
 									nongeekDict[value2] += 1
-									#nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
+									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
 								elif (attr2 == "@major"):
 									nongeekDict[value2] += 1
 									#nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
@@ -289,9 +290,11 @@ class NaiveBayesClassifer:
 									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
 								elif (attr2 == "@lotr_novels"):
 									nongeekDict[value2] += 1
-									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)
+									nongeekInstance.values.setdefault(attr2, {}).update(nongeekDict)'''
+									
 								
-								nongeekDict.clear()
+								#nongeekDict.clear()
+						#nongeekInstance.values.setdefault('@gpa', {}).update(nongeekDict.fromkeys(nongeekDict.keys()))
 					
 
 					# listOfInstances.append(Instance())
@@ -305,7 +308,7 @@ class NaiveBayesClassifer:
 		#print geekDict.items()
 		nongeekInstance.values.update(nongeekDict)
 		#print nongeekDict.items()
-		print nongeekInstance.values
+		print nongeekInstance.values['Female'] nongeekCount
 		
 		return listOfInstances
 		
