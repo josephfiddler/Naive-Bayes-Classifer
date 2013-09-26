@@ -68,12 +68,14 @@ class NaiveBayesClassifer:
 					for attr, value in zip(listofVariables, valueList):
 						if (value == "geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
-								if (attr2 == "@gpa"):
-									if (float(value2) > 3.6):
-										geekDict[value2] += 1
-										#geekInstance.values.setdefault(attr2, {})['gpa_3_6_orMore'] = 1
-									else:
-									    geekDict[value2] += 1
+								geekDict[value2] += 1
+								
+								if not geekInstance.values.has_key(attr2):
+									geekInstance.values[attr2] = {}
+								if not geekInstance.values[attr2].has_key(value2):
+									geekInstance.values[attr2][value2] = 1
+								else:
+									geekInstance.values[attr2][value2] += 1
 								
 						elif (value == "non-geek"):
 							for attr2, value2 in zip(listofVariables, valueList):
@@ -323,6 +325,7 @@ class NaiveBayesClassifer:
 		#nongeekInstance.values.update(nongeekDict)
 		#print nongeekDict.items()
 		print nongeekInstance.values
+		print geekInstance.values
 		
 		return listOfInstances
 		
