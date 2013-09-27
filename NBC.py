@@ -2,8 +2,32 @@ from collections import defaultdict
 
 class NaiveBayesClassifer:
 	
-	def Test(self, dataFile):
-		listOfDicts = 
+	#Train Method
+	def Train(self, dataFile):
+		listOfDicts = self.parseDataFile(dataFile)
+		
+		for dict, attr, value in zip(listOfDicts, self.listOfVariables, self.valueList):
+			if (dict.Classification == "geek"):
+				for attr2, value2 in zip(attr, value):
+					if not self.geekProbs.has_key(attr2):
+						self.geekProbs[attr2] = {}
+					if not self.geekProbs[attr2].has_key(value2):
+						self.geekProbs[attr2][value2] = 1
+					else:
+						self.geekProbs[attr2][value2] += 1
+			elif (dict.Classification == "non-geek"):
+				for attr2, value2 in zip(attr, value):
+					if not self.nongeekProbs.has_key(attr2):
+						self.nongeekProbs[attr2] = {}
+					if not self.nongeekProbs[attr2].has_key(value2):
+						self.nongeekProbs[attr2][value2] = 1
+					else:
+						self.nongeekProbs[attr2][value2] += 1
+				
+		
+		print self.geekProbs
+		print self.nongeekProbs
+					
 				
 	def parseDataFile(self, dataFile):
 		listofVariables = []
@@ -19,9 +43,6 @@ class NaiveBayesClassifer:
 		#Create geek and non-geek dictionaries
 		geekInstance = self.Instance()
 		nongeekInstance = self.Instance()
-		geekDict = defaultdict(int)
-		nongeekDict = defaultdict(int)
-		nonGeekProbs = defaultdict(dict)
 
 		#remove whitespace from files
 		for line in fileLines:
@@ -30,18 +51,18 @@ class NaiveBayesClassifer:
 				if line[0] == '#':   #check for comment
 					x = 2
 				elif line[0] == '@':	 #check for attribute
-					listofVariables = self.parseLine(line)
+					variables = self.parseLine(line)
 					#print listofVariables #This prints all the @ variables that were in the data file
 				else:				# handle data
 					tempInstance = self.Instance()
-					valueList = self.parseLine(line)
+					values = self.parseLine(line)
 					
 					#print valueList #This prints all the values for those variables
-					if len(listofVariables) < 1:
+					if len(variables) < 1:
 						print "Bad Data File"
 						break
 						
-					for value in valueList:
+					for value in values:
 						if (value == "geek"):
 							geekCount = geekCount + 1
 						elif (value == "non-geek"):
@@ -54,14 +75,18 @@ class NaiveBayesClassifer:
 					#From what I can tell, this where the values are being put into the dictionaries.
 					#This function and the Instace class is where we may need a dictionary of dictionaries
 					#like on the Google doc. At least I narrowed down where the problem is. I believe once 					#we get the dictionary thing down, the rest of this program will be easy.
-					for attr, value in zip(listofVariables, valueList):
+					for attr, value in zip(variables, values):
 						tempInstance.values[attr] = (value).lower()
 					listOfInstances.append(tempInstance)
+					self.listOfVariables.append(variables)
+					self.valueList.append(values)
+
 					
+										
 					#Defnitely will have to use a Switch statement. Can't think of any other way, it will be huge
 					#This is all test at the moment
 					if (tempInstance.Classification == "geek"):
-						for attr2, value2 in zip(listofVariables, valueList):
+						for attr2, value2 in zip(variables, values):
 							if not geekInstance.values.has_key(attr2):
 								geekInstance.values[attr2] = {}
 							if not geekInstance.values[attr2].has_key(value2):
@@ -69,19 +94,19 @@ class NaiveBayesClassifer:
 							else:
 								geekInstance.values[attr2][value2] += 1
 					elif (tempInstance.Classification == "non-geek"):
-						for attr2, value2 in zip(listofVariables, valueList):
+						for attr2, value2 in zip(variables, values):
 							if not nongeekInstance.values.has_key(attr2):
 								nongeekInstance.values[attr2] = {}
 							if not nongeekInstance.values[attr2].has_key(value2):
 								nongeekInstance.values[attr2][value2] = 1
 							else:
 								nongeekInstance.values[attr2][value2] += 1
-							
-					nongeekDict.clear()
 		
 		
-		print nongeekInstance.values
-		print geekInstance.values
+		#print nongeekInstance.values
+		#print geekInstance.values
+		
+		#print listOfInstances
 		
 		return listOfInstances
 		
@@ -98,8 +123,13 @@ class NaiveBayesClassifer:
 			self.values = {}
 		def __repr__(self):
 			return str(self.values) + " ("+ self.Classification + ")"
+			
+	geekProbs = {}
+	nongeekProbs = {}
+	listOfVariables = []
+	valueList = []
 		
 if __name__ == '__main__':
 	nbc = NaiveBayesClassifer()
-	nbc.parseDataFile("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
+	nbc.Train("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
 	
