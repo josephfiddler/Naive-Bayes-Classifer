@@ -20,7 +20,7 @@ class NaiveBayesClassifer:
 					#If geekProbs[attr2] doesn't have the key value2
 					if not self.geekProbs[attr2].has_key(value2):
 						#Then add 1 to the key
-						self.geekProbs[attr2][value2] = 1.0
+						self.geekProbs[attr2][value2] = 2.0
 					#If geekProbs[attr2] has the key value2
 					else:
 						#Then increment
@@ -38,7 +38,7 @@ class NaiveBayesClassifer:
 					#If nongeekProbs[attr2] doesn't have the key value2
 					if not self.nongeekProbs[attr2].has_key(value2):
 						#Then add 1 to the key
-						self.nongeekProbs[attr2][value2] = 1.0
+						self.nongeekProbs[attr2][value2] = 2.0
 					#If nongeekProbs[attr2] has the key value2
 					else:
 						#Then increment
@@ -97,10 +97,10 @@ class NaiveBayesClassifer:
 						#If key exists in geekProbs
 						if (self.geekProbs[attr2].has_key(dict.values[attr2])):
 							#Compute geekProbability
-							geekProbability = geekProbability * (self.geekProbs[attr2][dict.values[attr2]] / self.geekCount)
+							geekProbability = geekProbability * math.log((self.geekProbs[attr2][dict.values[attr2]] / self.geekCount))
 						elif (self.nongeekProbs[attr2].has_key(dict.values[attr2])):
 							#Else, compute nongeekProbability
-							nongeekProbability = nongeekProbability * (self.nongeekProbs[attr2][dict.values[attr2]] / self.nongeekCount)
+							nongeekProbability = nongeekProbability * math.log((self.nongeekProbs[attr2][dict.values[attr2]] / self.nongeekCount))
 		
 		#If geekProbability is greater than nongeekProbability
 		if (geekProbability > nongeekProbability):
@@ -161,14 +161,14 @@ class NaiveBayesClassifer:
 			
 	geekProbs = {}
 	nongeekProbs = {}
-	geekCount = 0.0
-	nongeekCount = 0.0
-	totalCount = 0.0
+	geekCount = 1.0
+	nongeekCount = 1.0
+	totalCount = 2.0
 	listOfVariables = []
 	valueList = []
 		
 if __name__ == '__main__':
 	nbc = NaiveBayesClassifer()
 	nbc.Train("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
-	print "The percentage correct is: ", nbc.Test("/Users/Joey/Desktop/data2.txt")
+	print "The percentage correct is: ", nbc.Test("/Users/Joey/Desktop/IntroToAI/data2.txt")
 	
