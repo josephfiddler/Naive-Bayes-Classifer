@@ -17,23 +17,45 @@ class NaiveBayesClassifer:
 					if not self.geekProbs.has_key(attr2):
 						#Then create a dictionary value for that key
 						self.geekProbs[attr2] = {}
+					#If geekProbs[attr2] doesn't have the key value2
 					if not self.geekProbs[attr2].has_key(value2):
+						#Then add 1 to the key
 						self.geekProbs[attr2][value2] = 1
+					#If geekProbs[attr2] has the key value2
 					else:
+						#Then increment
 						self.geekProbs[attr2][value2] += 1
+				#Keep a running count of geeks
+				self.geekCount += 1
+			#If the instance is a non-geek
 			elif (dict.Classification == "non-geek"):
+				#For each variable and value in the lists attr and value
 				for attr2, value2 in zip(attr, value):
+					#If nongeekProbs doesn't have the key attr2
 					if not self.nongeekProbs.has_key(attr2):
+						#Then create a dictionary value for that key
 						self.nongeekProbs[attr2] = {}
+					#If nongeekProbs[attr2] doesn't have the key value2
 					if not self.nongeekProbs[attr2].has_key(value2):
+						#Then add 1 to the key
 						self.nongeekProbs[attr2][value2] = 1
+					#If nongeekProbs[attr2] has the key value2
 					else:
+						#Then increment
 						self.nongeekProbs[attr2][value2] += 1
+				#Keep a running count of non-geeks
+				self.nongeekCount += 1
 				
+		#Compute the total count of geeks and non-geeks
+		self.totalCount = self.nongeekCount + self.geekCount
+		
+		#Create a key:value pair called prob for each dictionary
+		self.geekProbs['prob'] = str(self.geekCount) + "/" + str(self.totalCount)
+		self.nongeekProbs['prob'] = str(self.nongeekCount) + "/" + str(self.totalCount)
+		
+		#Delete the key class from both dictionaries. We don't need that.
 		del self.geekProbs['class']
 		del self.nongeekProbs['class']
-		print self.geekProbs
-		print self.nongeekProbs
 					
 				
 	def parseDataFile(self, dataFile):
@@ -41,15 +63,6 @@ class NaiveBayesClassifer:
 		listOfInstances = []
 		file = open (dataFile, 'rU')
 		fileLines = file.readlines()
-		
-		#Declare variables to keep count of the geeks and those heathen non-geeks
-		geekCount = 0
-		nongeekCount = 0
-		count = 0
-		
-		#Create geek and non-geek dictionaries
-		geekInstance = self.Instance()
-		nongeekInstance = self.Instance()
 
 		#remove whitespace from files
 		for line in fileLines:
@@ -68,16 +81,6 @@ class NaiveBayesClassifer:
 					if len(variables) < 1:
 						print "Bad Data File"
 						break
-						
-					for value in values:
-						if (value == "geek"):
-							geekCount = geekCount + 1
-						elif (value == "non-geek"):
-							nongeekCount = nongeekCount + 1
-						
-					
-					self.geekProbs['prob'] = str(geekCount) + "/" + str(geekCount + nongeekCount)
-					self.nongeekProbs['prob'] = str(nongeekCount) + "/" + str(geekCount + nongeekCount)
 					
 					#From what I can tell, this where the values are being put into the dictionaries.
 					#This function and the Instace class is where we may need a dictionary of dictionaries
@@ -106,6 +109,9 @@ class NaiveBayesClassifer:
 			
 	geekProbs = {}
 	nongeekProbs = {}
+	geekCount = 0
+	nongeekCount = 0
+	totalCount = 0
 	listOfVariables = []
 	valueList = []
 		
