@@ -2,7 +2,7 @@ from collections import defaultdict
 
 class NaiveBayesClassifer:
 	
-	#Train Method
+	#Train method sets up the internal workings for the NBC
 	def Train(self, dataFile):
 		#Variable to hold the list of dictionaries returned from parseDataFile
 		listOfDicts = self.parseDataFile(dataFile)
@@ -50,17 +50,53 @@ class NaiveBayesClassifer:
 		self.totalCount = self.nongeekCount + self.geekCount
 		
 		#Create a key:value pair called prob for each dictionary
-		self.geekProbs['prob'] = str(self.geekCount) + "/" + str(self.totalCount)
-		self.nongeekProbs['prob'] = str(self.nongeekCount) + "/" + str(self.totalCount)
+		self.geekProbs['prob'] = str(str(self.geekCount) + "/" + str(self.totalCount))
+		self.nongeekProbs['prob'] = str(str(self.nongeekCount) + "/" + str(self.totalCount))
 		
 		#Delete the key class from both dictionaries. We don't need that.
 		del self.geekProbs['class']
 		del self.nongeekProbs['class']
 		
+		
 	def Test(self, dataFile):
-		listOfDicts = parseDataFile(dataFile)
+		listOfDicts = self.parseDataFile(dataFile)
+		correctCount = 0.0
+		totalCount = 0.0
+		
+		
+		for dict in listOfDicts:
+			
+			self.Classify(dict)
+			'''if (dict.Classification == Classify(dict)):
+				correctCount += 1.0
+				totalCount += 1.0
+			else:
+				totalCount += 1.0
+		
+		return correctCount / totalCount'''
+			
 					
-				
+	def Classify(self, dict):
+		geekProbability = 1
+		nongeekProbability = 1
+		
+		
+		
+		for attr, value in zip(self.listOfVariables, self.valueList):
+			for attr2, value2 in zip(attr, value):
+				if self.geekProbs.has_key(attr2):
+					if self.geekProbs[attr2].has_key(value2):
+						#print "dict.value[attr2]: ",  dict.values[attr2],  "self.geekProbs[attr2][value2]",  self.geekProbs[attr2]
+						#cmp(dict.values[attr2], self.geekProbs[attr2].keys())
+						if (self.geekProbs[attr2].has_key(dict.values[attr2])):
+							print self.geekProbs[attr2][dict.values[attr2]]
+							print self.geekCount
+							print self.geekProbs[attr2][dict.values[attr2]] / self.geekCount
+							geekProbability = geekProbability * (self.geekProbs[attr2][dict.values[attr2]] / self.geekCount)
+							#print geekProbability
+						else:
+							print "false"
+		
 	def parseDataFile(self, dataFile):
 		listofVariables = []
 		listOfInstances = []
@@ -89,7 +125,7 @@ class NaiveBayesClassifer:
 					#This function and the Instace class is where we may need a dictionary of dictionaries
 					#like on the Google doc. At least I narrowed down where the problem is. I believe once 					#we get the dictionary thing down, the rest of this program will be easy.
 					for attr, value in zip(variables, values):
-						tempInstance.values[attr] = (value).lower()
+						tempInstance.values[attr] = value
 					listOfInstances.append(tempInstance)
 					self.listOfVariables.append(variables)
 					self.valueList.append(values)
@@ -121,4 +157,5 @@ class NaiveBayesClassifer:
 if __name__ == '__main__':
 	nbc = NaiveBayesClassifer()
 	nbc.Train("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
+	nbc.Test("/Users/Joey/Desktop/data2.txt")
 	
