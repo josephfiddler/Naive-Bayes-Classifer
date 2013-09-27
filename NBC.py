@@ -57,41 +57,57 @@ class NaiveBayesClassifer:
 		del self.geekProbs['class']
 		del self.nongeekProbs['class']
 		
-		
+	#Test method to classify some test data
 	def Test(self, dataFile):
+		#Variable to hold the list of dictionaries returned from parseDataFile
 		listOfDicts = self.parseDataFile(dataFile)
+		
+		#Keep count of the corrent amount and total count
 		correctCount = 0.0
 		totalCount = 0.0
 		
-		
+		#For each dictionary in the list of dictionaries
 		for dict in listOfDicts:
-			
+			#If the classification matches the classification given to the dictionary from the Classify method
 			if (dict.Classification == self.Classify(dict)):
+				#Then it was correct, increment counts
 				correctCount += 1.0
 				totalCount += 1.0
 			else:
+				#If not, just increment the total count
 				totalCount += 1.0
 		
+		#Return the percentage correct
 		return correctCount / totalCount
 			
-					
+	#Method to classify a instance
 	def Classify(self, dict):
+		#Variable to hold the starting probabilities
 		geekProbability = self.geekCount / self.totalCount
 		nongeekProbability = self.nongeekCount / self.totalCount
 		
+		#For each variable list and value list in the list of variables and value list
 		for attr, value in zip(self.listOfVariables, self.valueList):
+			#For each variable and value in the variable list and value list
 			for attr2, value2 in zip(attr, value):
+				#If geekProbs has the attr2 key
 				if self.geekProbs.has_key(attr2):
+					#If geekProbs has the key value2 in the attr2 dictionary
 					if self.geekProbs[attr2].has_key(value2):
+						#If key exists in geekProbs
 						if (self.geekProbs[attr2].has_key(dict.values[attr2])):
+							#Compute geekProbability
 							geekProbability = geekProbability * (self.geekProbs[attr2][dict.values[attr2]] / self.geekCount)
-							#print geekProbability
 						elif (self.nongeekProbs[attr2].has_key(dict.values[attr2])):
+							#Else, compute nongeekProbability
 							nongeekProbability = nongeekProbability * (self.nongeekProbs[attr2][dict.values[attr2]] / self.nongeekCount)
-							
+		
+		#If geekProbability is greater than nongeekProbability
 		if (geekProbability > nongeekProbability):
+			#Then return geek
 			return "geek"
 		else:
+			#Else return non-geej
 			return "non-geek"
 		
 	def parseDataFile(self, dataFile):
