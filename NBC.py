@@ -56,6 +56,9 @@ class NaiveBayesClassifer:
 		#Delete the key class from both dictionaries. We don't need that.
 		del self.geekProbs['class']
 		del self.nongeekProbs['class']
+		
+	def Test(self, dataFile):
+		listOfDicts = parseDataFile(dataFile)
 					
 				
 	def parseDataFile(self, dataFile):
