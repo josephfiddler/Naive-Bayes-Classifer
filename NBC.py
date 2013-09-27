@@ -4,12 +4,18 @@ class NaiveBayesClassifer:
 	
 	#Train Method
 	def Train(self, dataFile):
+		#Variable to hold the list of dictionaries returned from parseDataFile
 		listOfDicts = self.parseDataFile(dataFile)
 		
+		#For each dictionary, variable list, and value list in the lists of listOfDicts, listOfVariables, and valueList
 		for dict, attr, value in zip(listOfDicts, self.listOfVariables, self.valueList):
+			#If the instance is a geek
 			if (dict.Classification == "geek"):
+				#For each variable and value in the lists attr and value
 				for attr2, value2 in zip(attr, value):
+					#If geekProbs doesn't have the key attr2
 					if not self.geekProbs.has_key(attr2):
+						#Then create a dictionary value for that key
 						self.geekProbs[attr2] = {}
 					if not self.geekProbs[attr2].has_key(value2):
 						self.geekProbs[attr2][value2] = 1
@@ -24,7 +30,8 @@ class NaiveBayesClassifer:
 					else:
 						self.nongeekProbs[attr2][value2] += 1
 				
-		
+		del self.geekProbs['class']
+		del self.nongeekProbs['class']
 		print self.geekProbs
 		print self.nongeekProbs
 					
@@ -69,8 +76,8 @@ class NaiveBayesClassifer:
 							nongeekCount = nongeekCount + 1
 						
 					
-					geekInstance.values['prob'] = str(geekCount) + "/" + str(geekCount + nongeekCount)
-					nongeekInstance.values['prob'] = str(nongeekCount) + "/" + str(geekCount + nongeekCount)
+					self.geekProbs['prob'] = str(geekCount) + "/" + str(geekCount + nongeekCount)
+					self.nongeekProbs['prob'] = str(nongeekCount) + "/" + str(geekCount + nongeekCount)
 					
 					#From what I can tell, this where the values are being put into the dictionaries.
 					#This function and the Instace class is where we may need a dictionary of dictionaries
@@ -80,33 +87,6 @@ class NaiveBayesClassifer:
 					listOfInstances.append(tempInstance)
 					self.listOfVariables.append(variables)
 					self.valueList.append(values)
-
-					
-										
-					#Defnitely will have to use a Switch statement. Can't think of any other way, it will be huge
-					#This is all test at the moment
-					if (tempInstance.Classification == "geek"):
-						for attr2, value2 in zip(variables, values):
-							if not geekInstance.values.has_key(attr2):
-								geekInstance.values[attr2] = {}
-							if not geekInstance.values[attr2].has_key(value2):
-								geekInstance.values[attr2][value2] = 1
-							else:
-								geekInstance.values[attr2][value2] += 1
-					elif (tempInstance.Classification == "non-geek"):
-						for attr2, value2 in zip(variables, values):
-							if not nongeekInstance.values.has_key(attr2):
-								nongeekInstance.values[attr2] = {}
-							if not nongeekInstance.values[attr2].has_key(value2):
-								nongeekInstance.values[attr2][value2] = 1
-							else:
-								nongeekInstance.values[attr2][value2] += 1
-		
-		
-		#print nongeekInstance.values
-		#print geekInstance.values
-		
-		#print listOfInstances
 		
 		return listOfInstances
 		
