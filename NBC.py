@@ -1,4 +1,4 @@
-from collections import defaultdict
+import math
 
 class NaiveBayesClassifer:
 	
@@ -20,13 +20,13 @@ class NaiveBayesClassifer:
 					#If geekProbs[attr2] doesn't have the key value2
 					if not self.geekProbs[attr2].has_key(value2):
 						#Then add 1 to the key
-						self.geekProbs[attr2][value2] = 1
+						self.geekProbs[attr2][value2] = 1.0
 					#If geekProbs[attr2] has the key value2
 					else:
 						#Then increment
-						self.geekProbs[attr2][value2] += 1
+						self.geekProbs[attr2][value2] += 1.0
 				#Keep a running count of geeks
-				self.geekCount += 1
+				self.geekCount += 1.0
 			#If the instance is a non-geek
 			elif (dict.Classification == "non-geek"):
 				#For each variable and value in the lists attr and value
@@ -38,13 +38,13 @@ class NaiveBayesClassifer:
 					#If nongeekProbs[attr2] doesn't have the key value2
 					if not self.nongeekProbs[attr2].has_key(value2):
 						#Then add 1 to the key
-						self.nongeekProbs[attr2][value2] = 1
+						self.nongeekProbs[attr2][value2] = 1.0
 					#If nongeekProbs[attr2] has the key value2
 					else:
 						#Then increment
-						self.nongeekProbs[attr2][value2] += 1
+						self.nongeekProbs[attr2][value2] += 1.0
 				#Keep a running count of non-geeks
-				self.nongeekCount += 1
+				self.nongeekCount += 1.0
 				
 		#Compute the total count of geeks and non-geeks
 		self.totalCount = self.nongeekCount + self.geekCount
@@ -66,36 +66,33 @@ class NaiveBayesClassifer:
 		
 		for dict in listOfDicts:
 			
-			self.Classify(dict)
-			'''if (dict.Classification == Classify(dict)):
+			if (dict.Classification == self.Classify(dict)):
 				correctCount += 1.0
 				totalCount += 1.0
 			else:
 				totalCount += 1.0
 		
-		return correctCount / totalCount'''
+		return correctCount / totalCount
 			
 					
 	def Classify(self, dict):
-		geekProbability = 1
-		nongeekProbability = 1
-		
-		
+		geekProbability = self.geekCount / self.totalCount
+		nongeekProbability = self.nongeekCount / self.totalCount
 		
 		for attr, value in zip(self.listOfVariables, self.valueList):
 			for attr2, value2 in zip(attr, value):
 				if self.geekProbs.has_key(attr2):
 					if self.geekProbs[attr2].has_key(value2):
-						#print "dict.value[attr2]: ",  dict.values[attr2],  "self.geekProbs[attr2][value2]",  self.geekProbs[attr2]
-						#cmp(dict.values[attr2], self.geekProbs[attr2].keys())
 						if (self.geekProbs[attr2].has_key(dict.values[attr2])):
-							print self.geekProbs[attr2][dict.values[attr2]]
-							print self.geekCount
-							print self.geekProbs[attr2][dict.values[attr2]] / self.geekCount
 							geekProbability = geekProbability * (self.geekProbs[attr2][dict.values[attr2]] / self.geekCount)
 							#print geekProbability
-						else:
-							print "false"
+						elif (self.nongeekProbs[attr2].has_key(dict.values[attr2])):
+							nongeekProbability = nongeekProbability * (self.nongeekProbs[attr2][dict.values[attr2]] / self.nongeekCount)
+							
+		if (geekProbability > nongeekProbability):
+			return "geek"
+		else:
+			return "non-geek"
 		
 	def parseDataFile(self, dataFile):
 		listofVariables = []
@@ -148,14 +145,14 @@ class NaiveBayesClassifer:
 			
 	geekProbs = {}
 	nongeekProbs = {}
-	geekCount = 0
-	nongeekCount = 0
-	totalCount = 0
+	geekCount = 0.0
+	nongeekCount = 0.0
+	totalCount = 0.0
 	listOfVariables = []
 	valueList = []
 		
 if __name__ == '__main__':
 	nbc = NaiveBayesClassifer()
 	nbc.Train("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
-	nbc.Test("/Users/Joey/Desktop/data2.txt")
+	print nbc.Test("/Users/Joey/Desktop/data2.txt")
 	
