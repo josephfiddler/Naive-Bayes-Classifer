@@ -154,5 +154,5 @@ class NaiveBayesClassifer:
 if __name__ == '__main__':
 	nbc = NaiveBayesClassifer()
 	nbc.Train("/Users/Joey/Desktop/IntroToAI/rbes/data.txt")
-	print nbc.Test("/Users/Joey/Desktop/data2.txt")
+	print "The percentage correct is: ", nbc.Test("/Users/Joey/Desktop/data2.txt")
 	
