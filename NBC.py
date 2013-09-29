@@ -98,9 +98,14 @@ class NaiveBayesClassifer:
 						if (self.geekProbs[attr2].has_key(dict.values[attr2])):
 							#Compute geekProbability
 							geekProbability = geekProbability * math.log((self.geekProbs[attr2][dict.values[attr2]] / self.geekCount))
-						elif (self.nongeekProbs[attr2].has_key(dict.values[attr2])):
-							#Else, compute nongeekProbability
-							nongeekProbability = nongeekProbability * math.log((self.nongeekProbs[attr2][dict.values[attr2]] / self.nongeekCount))
+				#If nongeekProbs has the attr2 key
+				if self.nongeekProbs.has_key(attr2):
+									#If nongeekProbs has the key value2 in the attr2 dictionary
+									if self.nongeekProbs[attr2].has_key(value2):
+										#If key exists in nongeekProbs
+										if (self.nongeekProbs[attr2].has_key(dict.values[attr2])):
+											#Compute nongeekProbability
+											nongeekProbability = nongeekProbability * math.log((self.nongeekProbs[attr2][dict.values[attr2]] / self.geekCount))
 		
 		#If geekProbability is greater than nongeekProbability
 		if (geekProbability > nongeekProbability):
